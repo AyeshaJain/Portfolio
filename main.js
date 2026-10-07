@@ -30,4 +30,25 @@
 
   window.addEventListener('hashchange', route);
   route();
+
+  // Pop pictures and cards in as they scroll into view.
+  // Elements start with .reveal (hidden + shrunk); removing it lets the CSS transition pop them in.
+  if (!('IntersectionObserver' in window)) return;
+  document.documentElement.classList.add('js');
+
+  const popIn = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (!entry.isIntersecting) return;
+      const el = entry.target;
+      popIn.unobserve(el);
+      // Stagger siblings in the same row a little
+      const index = [...el.parentElement.children].indexOf(el);
+      setTimeout(() => el.classList.remove('reveal'), (index % 4) * 80);
+    });
+  }, { threshold: 0.15 });
+
+  document.querySelectorAll('.polaroid, .card').forEach((el) => {
+    el.classList.add('reveal');
+    popIn.observe(el);
+  });
 })();
