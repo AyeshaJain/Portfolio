@@ -325,7 +325,7 @@ footer {
 .hero-intro {
   font-size: 17px;
   line-height: 1.7;
-  max-width: 58ch;
+  max-width: 640px; /* same width as the folder card */
   color: var(--ink-soft);
   margin: 36px auto 0;
   text-align: center;
